@@ -5,8 +5,10 @@ project.
 Building instructions are OS dependent.
 
 ## VSCode
+[!NOTE]
 You do not need to use VSCode if you prefer other editors. I use it, so I have
-included the .vscode directory in the repository.
+included the .vscode directory in the repository. If you use a different editor
+for which there are equivalent files, I will be happy to include them.
 
 To install VSCode, follow the instructions on the [VSCode Download page](
     https://code.visualstudio.com/download?_exp_download=fb315fc982).
@@ -38,6 +40,7 @@ And to download and build __tssconfig__, enter:
 cd <your-projects-folder>
 git clone https://github.com/jimorc/tssconfig.git
 cd tssconfig
+pip install -r requirements.txt
 # if using vscode:
 code .
 # or to build from the command line:
@@ -45,15 +48,4 @@ python3 -m tssconfig # for debug mode, or
 python3 -OO -m tssconfig # for the release version
 ```
 
-
-
-As mentioned above, I use VSCode as my text editor. To install it, follow the
-instructions on the [VSCode Download page](
-    https://code.visualstudio.com/download?_exp_download=fb315fc982).
-VSCode is available as a Snap package directly on the download page, and as
-a Flatpak on FlatHub. I recommend not using the Flatpak package as I had
-problems with using python with it. I did not try the Snap package. If you have
-success with the VSCode Snap package, please let me know.
-
-Once VSCode is installed, you need the Python extension from Microsoft. This
-is available directly from the extensions
+More to come, including how to bundle as an executable.
