@@ -40,7 +40,10 @@ And to download and build __tssconfig__, enter:
 cd <your-projects-folder>
 git clone https://github.com/jimorc/tssconfig.git
 cd tssconfig
+python -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
+
 # if using vscode:
 code .
 # or to build from the command line:
@@ -48,4 +51,3 @@ python3 -m tssconfig # for debug mode, or
 python3 -OO -m tssconfig # for the release version
 ```
 
-More to come, including how to bundle as an executable.
