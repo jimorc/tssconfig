@@ -47,7 +47,9 @@ pip install -r requirements.txt
 # if using vscode:
 code .
 # or to build from the command line:
-python3 -m tssconfig # for debug mode, or
-python3 -OO -m tssconfig # for the release version
+python3 -m src.main # for debug mode, or
+python3 -OO -m src.main # for the release version
+# to run tests:
+python3 -m unittest tests/*test*
 ```
 
