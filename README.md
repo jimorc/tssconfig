@@ -47,7 +47,7 @@ __tssconfig__ is licensed under the MIT License. A copy of the license in includ
 Documentation on how to use the program will be provided in this repository's Wiki when the first release of the program is created.
 ### Contributing Instructions
 
-Instructions on how to contribute to __tssconfig__ are provided in CONTRIBUTING.md.
+Instructions on how to contribute to __tssconfig__ are provided in [CONTRIBUTING.md](CONTRIBUTING.md).
 ### How to Build From Source
 
-To be added, probably in BUILDING.md.
+To be added, probably in [BUILDING.md](BUILDING.md).
