@@ -41,3 +41,22 @@ class TestCFGFile(unittest.TestCase):
         cfg_file = CfgFile(path=Path("non_existent_config.toml"))
         with self.assertRaises(FileNotFoundError):
             cfg_file.read()
+
+    def test_bad_write(self):
+        # Test that writing to a file in a non-existent directory raises an 
+        # IOError
+        cfg_file = CfgFile(path=Path("/non_existent_directory/config.toml"))
+        with self.assertRaises(IOError):
+            cfg_file.write("test_data")
+
+    def test_bad_read_permission(self):
+        # Test that reading from a file without read permissions raises an 
+        # IOError
+        cfg_file = CfgFile(path=Path("no_read_permission_config.toml"))
+        with open(cfg_file.get_path(), 'w') as f:
+            f.write("test_data")
+        os.chmod(cfg_file.get_path(), 0o000)  # Remove read permissions
+        with self.assertRaises(IOError):
+            cfg_file.read()
+        os.chmod(cfg_file.get_path(), 0o644)  # Restore permissions
+        os.remove(cfg_file.get_path())  # Clean up the test file
