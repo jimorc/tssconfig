@@ -53,3 +53,24 @@ python3 -OO -m src.main # for the release version
 python3 -m unittest tests/*test*
 ```
 
+### Unit Tests
+You can run unit tests using the Test Explorer in VSCode, or from the
+command line using:
+```bash
+python3 -m unittest tests/*test*
+```
+At this time, no tests have been included for UI-related code. 
+
+#### Measuring Test Coverage
+Test coverage can be measured in VSCode by selecting the 
+__Run Tests With Coverage__
+button in the Test Explorer. This generates a test coverage report in the Test
+Explorer that lists all directories and python source files. Note that the
+test coverage for UI-related files may be 0% since no tests have been
+provided for this.
+```bash
+python3 -m coverage run -m unittest tests/*test*
+python3 -m coverage report
+```
+The report lists only the files, including __init__.py files, that are
+referenced by the tests in the test files.

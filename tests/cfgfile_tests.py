@@ -41,6 +41,3 @@ class TestCFGFile(unittest.TestCase):
         cfg_file = CfgFile(path=Path("non_existent_config.toml"))
         with self.assertRaises(FileNotFoundError):
             cfg_file.read()
-
-if __name__ == '__main__':
-    unittest.main()
