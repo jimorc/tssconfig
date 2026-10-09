@@ -26,18 +26,18 @@ class TestCfgDataValues(unittest.TestCase):
         self.assertEqual(cfg_data.get_value('max_slide_width'), 1600)
         self.assertEqual(cfg_data.get_value('max_slide_height'), 1200)
 
-    def test_get_toml(self):
+    def test_dumps(self):
         cfg_data = CfgDataValues()
         cfg_data.set_value('max_slide_width', 1600)
         cfg_data.set_value('max_slide_height', 1200)
 
         expected_toml = "max_slide_width = 1600\nmax_slide_height = 1200\n"
-        self.assertEqual(cfg_data.get_toml(), expected_toml)
+        self.assertEqual(cfg_data.dumps(), expected_toml)
 
-    def test_get_toml_empty(self):
+    def test_dumps_empty(self):
         cfg_data = CfgDataValues()
         expected_toml = ""
-        self.assertEqual(cfg_data.get_toml(), expected_toml)
+        self.assertEqual(cfg_data.dumps(), expected_toml)
 
     def test_loads_valid_toml(self):
         cfg_data = CfgDataValues()

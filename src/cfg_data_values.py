@@ -49,7 +49,7 @@ class CfgDataValues:
         """
         self.data[key] = value
 
-    def get_toml(self):
+    def dumps(self):
         """
         Returns the configuration data as a string in TOML format.
 
