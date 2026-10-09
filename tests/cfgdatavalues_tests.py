@@ -1,3 +1,4 @@
+import toml
 import unittest
 from src.cfg_data_values import CfgDataValues
 
@@ -37,3 +38,25 @@ class TestCfgDataValues(unittest.TestCase):
         cfg_data = CfgDataValues()
         expected_toml = ""
         self.assertEqual(cfg_data.get_toml(), expected_toml)
+
+    def test_loads_valid_toml(self):
+        cfg_data = CfgDataValues()
+        toml_string = "max_slide_width = 1600\nmax_slide_height = 1200\n"
+        cfg_data.loads(toml_string)
+
+        self.assertEqual(cfg_data.get_value('max_slide_width'), 1600)
+        self.assertEqual(cfg_data.get_value('max_slide_height'), 1200)
+
+    def test_loads_invalid_toml(self):
+        cfg_data = CfgDataValues()
+        invalid_toml_string = "max_slide_width = 1600\nmax_slide_height\n"
+        
+        with self.assertRaises(toml.TomlDecodeError):
+            cfg_data.loads(invalid_toml_string)
+
+    def test_loads_non_string(self):
+        cfg_data = CfgDataValues()
+        non_string_input = 12345
+        
+        with self.assertRaises(TypeError):
+            cfg_data.loads(non_string_input)

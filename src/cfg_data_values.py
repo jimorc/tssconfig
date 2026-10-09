@@ -58,7 +58,18 @@ class CfgDataValues:
         """
         return toml.dumps(self.data)
 
+    def loads(self, toml_string):
+        """
+        Sets the configuration data from a string in TOML format.
 
+        Args:
+            toml_string (str): The TOML string to parse and set as configuration data.
+        
+        Raises:
+            toml.TomlDecodeError: If the provided string is not valid TOML.
+            TypeError: If the provided string is not a string type.
+        """
+        self.data = toml.loads(toml_string)
     
     def read_from_file(self, file_path):
         """
