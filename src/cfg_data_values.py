@@ -17,16 +17,27 @@ class CfgDataValues:
         Actual initialiation of the values is done in other methods, such as
         `set_default_values()`.
         """
-        pass
+        
 
     def set_default_values(self):
         """
         Sets the default values for the configuration data.
         """
+        self.data = {}
         # width and height are in pixels
-        self.max_slide_width = 1400
-        self.max_slide_height = 1050
+        self.data['max_slide_width'] = 1400
+        self.data['max_slide_height'] = 1050
 
+    def get_value(self, key):
+        """
+        Gets the value for a given key from the configuration data.
+
+        Args:
+            key (str): The key for which to retrieve the value.
+        """
+        return self.data.get(key, None)
+
+    
     def read_from_file(self, file_path):
         """
         Reads the configuration values from a file.

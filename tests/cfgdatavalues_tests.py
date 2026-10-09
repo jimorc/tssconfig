@@ -6,5 +6,5 @@ class TestCfgDataValues(unittest.TestCase):
         cfg_data = CfgDataValues()
         cfg_data.set_default_values()
         
-        self.assertEqual(cfg_data.max_slide_width, 1400)
-        self.assertEqual(cfg_data.max_slide_height, 1050)
+        self.assertEqual(cfg_data.get_value('max_slide_width'), 1400)
+        self.assertEqual(cfg_data.get_value('max_slide_height'), 1050)
