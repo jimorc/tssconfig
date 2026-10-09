@@ -24,7 +24,7 @@ XLS is the old MS Excel format that was replaced by XLSX in Excel 2007.
 must be used to edit the files.
     
 One potential solution would be to update __flexishow__ to also accept XLSX or CSV files, but that only potentially solves one problem. However, I have been
-unable to locate the __flexishow__ source code. for There are others:
+unable to locate the __flexishow__ source code. There are others:
 
 * While Microsoft claims that XLSX is a standard, reality shows otherwise. Officially, XLSX is an open standard called Office Open XML, supposedly documented as standards ECMA-376 and ISO 29500. However, Microsoft only partially follows this standard and implements many proprietary, undocumented, additions that mean XLSX files cannot always be interchanged with other spreadsheet programs. In other words, while Microsoft was responsible for ramming Office Open XML through two standards organizations, they do not follow the standard themselves!
 * While both __trilliumshowfx__ and __flexishow__ were written in Java, they use different GUI libraries, so they look very different. This can be quite jarring to users when switching from one program to the other. The user interface for neither program matches the graphical user interfaces of any of MS Windows, MacOS, or Gnome or KDE on Linux. It might be possible to change the UI of one or the other program, but the resulting UIs still are not native to the operating systems that the programs execute on.
@@ -50,4 +50,6 @@ Documentation on how to use the program will be provided in this repository's Wi
 Instructions on how to contribute to __tssconfig__ are provided in [CONTRIBUTING.md](CONTRIBUTING.md).
 ### How to Build From Source
 
-To be added, probably in [BUILDING.md](BUILDING.md).
+Instructions for building __tssconfig are provided in
+[BUILDING.md](BUILDING.md). At the moment, only build instructions for
+Debian-based Linux systems are given.
