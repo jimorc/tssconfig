@@ -37,6 +37,16 @@ class CfgDataValues:
         """
         return self.data.get(key, None)
 
+    def set_value(self, key, value):
+        """
+        Sets the value for a given key in the configuration data.
+
+        Args:
+            key (str): The key for which to set the value.
+            value: The value to set for the given key.
+        """
+        self.data[key] = value
+
     
     def read_from_file(self, file_path):
         """
