@@ -1,3 +1,5 @@
+import toml
+
 class CfgDataValues:
     """
     A class to hold the config data values for the slideshow.
@@ -17,7 +19,7 @@ class CfgDataValues:
         Actual initialiation of the values is done in other methods, such as
         `set_default_values()`.
         """
-        
+        self.data = {}
 
     def set_default_values(self):
         """
@@ -46,6 +48,16 @@ class CfgDataValues:
             value: The value to set for the given key.
         """
         self.data[key] = value
+
+    def get_toml(self):
+        """
+        Returns the configuration data as a string in TOML format.
+
+        Returns:
+            str: The configuration data in TOML format.
+        """
+        return toml.dumps(self.data)
+
 
     
     def read_from_file(self, file_path):
