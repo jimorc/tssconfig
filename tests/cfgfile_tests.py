@@ -50,6 +50,24 @@ class TestCFGFile(unittest.TestCase):
         with self.assertRaises(IOError):
             cfg_file.write("test_data")
 
+    def test_bad_write_permission(self):
+        # Test that writing to a file without write permissions raises an 
+        # IOError
+        cfg_file = CfgFile(path=
+                           Path("test/test/no_write_permission_config.toml"))
+        if os.path.exists("test/"):
+            os.chmod("test/", 0o755)
+            shutil.rmtree("test/")
+        os.makedirs("test", 0o644)
+        try:
+            cfg_file.write("new_test_data")
+        except PermissionError:
+            pass
+        except IOError as io:
+            self.fail("Should have thrown PermissionError not IOError")
+        finally:
+            shutil.rmtree("test/")  # Clean up the test file
+
     def test_bad_read_permission(self):
         # Test that reading from a file without read permissions raises an 
         # IOError

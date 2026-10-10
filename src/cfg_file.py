@@ -39,8 +39,12 @@ class CfgFile:
             data (str): The data to write to the configuration file.
 
         Raises:
+            PermissionError: If the directory does not exist and cannot be
+                created, or if user does not have
             IOError: If there is an error writing to the file.
         """
+        if not self.path.parent.exists():
+            os.makedirs(self.path.parent, mode=0o755, exist_ok=True)
         with open(self.path, 'w') as f:
             f.write(data)
 
