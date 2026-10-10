@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from src.cfg_data_values import CfgDataValues
 
 class CfgFile:
     """
@@ -27,7 +28,7 @@ class CfgFile:
         Returns the path to the configuration file.
 
         Returns:
-            Path: The path to the configuration file.
+            Path: The path to the configurationpass file.
         """
         return self.path
 
@@ -42,7 +43,7 @@ class CfgFile:
             PermissionError: If the directory does not exist and cannot be
                 created, or if user does not have write permission on parent
                 directories.
-            IOError: If there is an error writing to the file.
+            OSError: If there is an error writing to the file.
         """
         if not self.path.parent.exists():
             os.makedirs(self.path.parent, mode=0o755, exist_ok=True)
@@ -58,7 +59,69 @@ class CfgFile:
 
         Raises:
             FileNotFoundError: If the configuration file does not exist.
-            IOError: If there is an error reading the file.
+            OSError: If there is an error reading the file.
         """
         with open(self.path, 'r') as f:
             return f.read()
+
+    def exists(self) -> bool:
+        """
+        Determines if the file exists.
+
+        Returns True if file exists, False otherwise
+        """
+        return self.get_path().exists()
+
+    def remove(self):
+        """
+        Deletes file if it exists.
+        """
+        os.remove(self.get_path())
+
+    def parent(self) -> Path:
+        '''
+        Retrieve parent directory of this file.
+
+        Returns:
+            Path to parent directory of this file.
+        '''
+        try:
+            parent = self.path.parent
+            return parent
+        except Exception as e:
+            print(e)
+
+    @staticmethod
+    def load_defaults(data: CfgDataValues) -> str:
+        """
+        Load contents of defaults file into data argument.
+
+        Args:
+            data (CfgDataValues): configuration data either returned from
+                config file or default values if config file does not exist,
+                or if an error occured while trying to retrieve file contents.
+
+        Returns:
+            str specifying status information related to load attempt.
+        """
+        status = ""
+        f = CfgFile()
+        if f.exists():
+            pass
+        else:
+            status = "Configuration file does not exist. "
+            status += "Will attempt to save default values.\n"
+            data.set_default_values()
+            toml = data.dumps()
+            try:
+                f.write(toml)
+                status += "Defaults file written.\n"
+            except PermissionError:
+                status += "Defaults file could not be saved. "
+                status += "User does not have permission to write defaults "
+                status += "file.\n"
+            except IOError as io:
+                status += format("IO error: {io} encountered while trying ")
+                status += "to write defaults file\n"
+        return status
+

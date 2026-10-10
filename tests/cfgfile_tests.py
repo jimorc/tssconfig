@@ -4,6 +4,7 @@ import shutil
 import unittest
 
 from src.cfg_file import CfgFile
+from src.cfg_data_values import CfgDataValues
 
 class TestCFGFile(unittest.TestCase):
     def test_get_config_file_path(self):
@@ -45,14 +46,14 @@ class TestCFGFile(unittest.TestCase):
 
     def test_bad_write(self):
         # Test that writing to a file in a non-existent directory raises an 
-        # IOError
+        # OSError
         cfg_file = CfgFile(path=Path("/non_existent_directory/config.toml"))
-        with self.assertRaises(IOError):
+        with self.assertRaises(OSError):
             cfg_file.write("test_data")
 
     def test_bad_write_permission(self):
         # Test that writing to a file without write permissions raises an 
-        # IOError
+        # OSError
         cfg_file = CfgFile(path=
                            Path("test/test/no_write_permission_config.toml"))
         if os.path.exists("test/"):
@@ -63,19 +64,51 @@ class TestCFGFile(unittest.TestCase):
             cfg_file.write("new_test_data")
         except PermissionError:
             pass
-        except IOError as io:
-            self.fail("Should have thrown PermissionError not IOError")
+        except OSError as io:
+            self.fail("Should have thrown PermissionError not OSError")
         finally:
             shutil.rmtree("test/")  # Clean up the test file
 
     def test_bad_read_permission(self):
         # Test that reading from a file without read permissions raises an 
-        # IOError
+        # OSError
         cfg_file = CfgFile(path=Path("no_read_permission_config.toml"))
         with open(cfg_file.get_path(), 'w') as f:
             f.write("test_data")
         os.chmod(cfg_file.get_path(), 0o000)  # Remove read permissions
-        with self.assertRaises(IOError):
+        with self.assertRaises(OSError):
             cfg_file.read()
         os.chmod(cfg_file.get_path(), 0o644)  # Restore permissions
         os.remove(cfg_file.get_path())  # Clean up the test file
+
+    # Calls to CfgFile.load_defaults has side effects. Because of this, it is
+    # necessary to force sequential execution of all tests on that method.
+    # Therefore, all tests must be placed in this test method.
+    def test_load_defaults(self):
+        # test config file doesn't exist
+        # delete config file
+        f = CfgFile()
+        if f.exists():
+            f.remove()
+        data = CfgDataValues()
+        status = CfgFile.load_defaults(data)
+        self.assertIn("Configuration file does not exist. ", status,
+                        "Config file does not exist test failed.")
+        self.assertIn("Will attempt to save default values.", status,
+                      "Will attempt - config file does not exist test failed.")
+        self.assertTrue(f.exists())
+        self.assertIn("Defaults file written.", status)
+
+        # PermissionsError on defaults file write
+        f.remove()
+        os.chmod(f.parent(), 0x444)
+        status = CfgFile.load_defaults(data)
+        os.chmod(f.parent(), 0o755)
+        self.assertIn("Configuration file does not exist. ", status,
+                      "Config file does not exist - permissions test failed.")
+        self.assertIn("Will attempt to save default values.", status,
+                      "Will attempt - permissions test failed.")
+        self.assertIn("Defaults file could not be saved.", status,
+                      "Config file - permissions failed.")
+
+        # I cannot determine how to generate an OSError
