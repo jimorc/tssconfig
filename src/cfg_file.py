@@ -40,7 +40,8 @@ class CfgFile:
 
         Raises:
             PermissionError: If the directory does not exist and cannot be
-                created, or if user does not have
+                created, or if user does not have write permission on parent
+                directories.
             IOError: If there is an error writing to the file.
         """
         if not self.path.parent.exists():
