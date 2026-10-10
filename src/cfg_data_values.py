@@ -70,13 +70,3 @@ class CfgDataValues:
             TypeError: If the provided string is not a string type.
         """
         self.data = toml.loads(toml_string)
-    
-    def read_from_file(self, file_path):
-        """
-        Reads the configuration values from a file.
-
-        Args:
-            file_path (str): The path to the configuration file.
-        """
-        # Implementation for reading from a file would go here
-        pass
