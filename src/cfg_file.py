@@ -20,7 +20,7 @@ class CfgFile:
         Returns:
             Path: The path to the default configuration file.
         """
-        return Path.home() / ".config" / "tssconfig.toml"
+        return Path.home() / ".config" / "tssconfig" / "tssconfig.toml"
 
     def get_path(self) -> Path:
         """

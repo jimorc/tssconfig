@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+import shutil
 import unittest
 
 from src.cfg_file import CfgFile
@@ -8,7 +9,7 @@ class TestCFGFile(unittest.TestCase):
     def test_get_config_file_path(self):
         # Test that get_path returns the expected value
         self.assertEqual(CfgFile.get_config_file_path(), 
-                         Path.home() / ".config" / "tssconfig.toml")
+                         Path.home() / ".config" / "tssconfig" / "tssconfig.toml")
 
     def test_init_with_custom_path(self):
         # Test that the CfgFile can be initialized with a custom path
