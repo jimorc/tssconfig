@@ -12,6 +12,9 @@ class CfgDataValues:
     also to provide default values for individual slideshows. The class can be
     extended to include additional settings as needed.
     """
+
+    DEFAULT_MAX_WIDTH = 1400
+    DEFAULT_MAX_HEIGHT = 1050
     def __init__(self):
         """
         Creates an empty CfgDataValues instance.
@@ -27,8 +30,8 @@ class CfgDataValues:
         """
         self.data = {}
         # width and height are in pixels
-        self.data['max_slide_width'] = 1400
-        self.data['max_slide_height'] = 1050
+        self.data['max_slide_width'] = self.DEFAULT_MAX_WIDTH
+        self.data['max_slide_height'] = self.DEFAULT_MAX_HEIGHT
 
     def get_value(self, key):
         """

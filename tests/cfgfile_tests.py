@@ -92,9 +92,9 @@ class TestCFGFile(unittest.TestCase):
             f.remove()
         data = CfgDataValues()
         status = CfgFile.load_defaults(data)
-        self.assertIn("Configuration file does not exist. ", status,
+        self.assertIn("Configuration file does not exist.", status,
                         "Config file does not exist test failed.")
-        self.assertIn("Will attempt to save default values.", status,
+        self.assertIn("Will attempt to save a new default values file.", status,
                       "Will attempt - config file does not exist test failed.")
         self.assertTrue(f.exists())
         self.assertIn("Defaults file written.", status)
@@ -106,9 +106,28 @@ class TestCFGFile(unittest.TestCase):
         os.chmod(f.parent(), 0o755)
         self.assertIn("Configuration file does not exist. ", status,
                       "Config file does not exist - permissions test failed.")
-        self.assertIn("Will attempt to save default values.", status,
+        self.assertIn("Will attempt to save a new default values file.", status,
                       "Will attempt - permissions test failed.")
         self.assertIn("Defaults file could not be saved.", status,
                       "Config file - permissions failed.")
 
         # I cannot determine how to generate an OSError
+
+        # Read valid config defaults file.
+        try:
+            f.write(data.dumps())
+        except Exception as e:
+            self.fail("Could not write the config file: {e}.")
+
+        try:
+            status = f.load_defaults(data)
+        except Exception as e:
+            self.fail("Error encountered trying to read config file: {e}")
+
+        self.assertIn("Config file read.", status)
+        self.assertEqual(CfgDataValues.DEFAULT_MAX_WIDTH, 
+                         data.get_value("max_slide_width"))
+        self.assertEqual(CfgDataValues.DEFAULT_MAX_HEIGHT,
+                         data.get_value("max_slide_height"))
+
+

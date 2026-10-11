@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 from src.cfg_data_values import CfgDataValues
+import toml as t
 
 class CfgFile:
     """
@@ -91,6 +92,36 @@ class CfgFile:
         except Exception as e:
             print(e)
 
+    def create_defaults_file(self, data: CfgDataValues) -> str:
+        """
+        Creates default data values and attempts to save them to the
+        defaults file.
+
+        Args:
+            data (CfgDataValues): The default configuration data. This is
+                set to the default configuration values whether the file can
+                be written or not.
+
+        Returns:
+            str: String containing status information about the attempt to
+                write the defaults file. 
+        """
+        status = "Will attempt to save a new default values file.\n"
+        data.set_default_values()
+        toml = data.dumps()
+        try:
+            self.write(toml)
+            status += "Defaults file written.\n"
+        except PermissionError:
+            status += "Defaults file could not be saved. "
+            status += "User does not have permission to write defaults "
+            status += "file.\n"
+        except OSError as io:
+            status += format("IO error: {io} encountered while trying ")
+            status += "to write defaults file\n"
+        return status
+
+
     @staticmethod
     def load_defaults(data: CfgDataValues) -> str:
         """
@@ -107,21 +138,23 @@ class CfgFile:
         status = ""
         f = CfgFile()
         if f.exists():
-            pass
-        else:
-            status = "Configuration file does not exist. "
-            status += "Will attempt to save default values.\n"
-            data.set_default_values()
-            toml = data.dumps()
             try:
-                f.write(toml)
-                status += "Defaults file written.\n"
-            except PermissionError:
-                status += "Defaults file could not be saved. "
-                status += "User does not have permission to write defaults "
-                status += "file.\n"
-            except IOError as io:
-                status += format("IO error: {io} encountered while trying ")
-                status += "to write defaults file\n"
-        return status
+                toml = f.read()
+                status += "Config file read.\n"
+                data.loads(toml)
+            except FileNotFoundError: # this should never happen! It also
+                # would be extremely difficult to test.
+                status += "File Not Found Error: This is a programming error.\n"
+                status += "Please file a bug report.\n"
+                status += f.create_defaults_file(data)
+            except OSError as e:
+                status += "Error: {e} encountered while trying to read the "
+                status += "defaults config file.\n"
+                status += f.create_defaults_file(data)
+            except t.TomlDecodeError:
+                pass
+        else:   # config file does not exist, so create it
+            status += "Configuration file does not exist. "
+            status += f.create_defaults_file(data)
 
+        return status
