@@ -130,4 +130,23 @@ class TestCFGFile(unittest.TestCase):
         self.assertEqual(CfgDataValues.DEFAULT_MAX_HEIGHT,
                          data.get_value("max_slide_height"))
 
+        # toml error in config file contents
+        data = CfgDataValues()
+        f.write("invalid content")
+        try:
+            status = f.load_defaults(data)
+        except Exception as e:
+            self.fail(
+                "Error encountered while attempting to decode invalid config")
+
+        self.assertIn("Config file does not contain valid text", status,
+                      "Invalid TOML test failed")
+        self.assertIn("Defaults file written", status,
+                      "Invalid TOML test failed - did not write defaults file")
+        self.assertEqual(CfgDataValues.DEFAULT_MAX_WIDTH, 
+                         data.get_value("max_slide_width"))
+        self.assertEqual(CfgDataValues.DEFAULT_MAX_HEIGHT,
+                         data.get_value("max_slide_height"))
+            
+
 

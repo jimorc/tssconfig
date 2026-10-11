@@ -152,7 +152,8 @@ class CfgFile:
                 status += "defaults config file.\n"
                 status += f.create_defaults_file(data)
             except t.TomlDecodeError:
-                pass
+                status += "Config file does not contain valid text.\n"
+                status += f.create_defaults_file(data)
         else:   # config file does not exist, so create it
             status += "Configuration file does not exist. "
             status += f.create_defaults_file(data)
