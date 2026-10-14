@@ -4,7 +4,7 @@ Configure a slideshow
 
 import wx
 
-from defaults_status_sizer import DefaultsStatusSizer
+from src.defaults_status_sizer import DefaultsStatusSizer
 
 class MainFrame(wx.Frame):
     """

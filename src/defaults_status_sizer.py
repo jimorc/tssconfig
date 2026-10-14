@@ -4,8 +4,8 @@ the tssconfig default values from the tssconfig.toml file.
 """
 import wx
 
-from cfg_file import CfgFile
-from cfg_data_values import CfgDataValues
+from src.cfg_file import CfgFile
+from src.cfg_data_values import CfgDataValues
 
 class DefaultsStatusSizer(wx.BoxSizer):
     """

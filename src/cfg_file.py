@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from cfg_data_values import CfgDataValues
+from src.cfg_data_values import CfgDataValues
 import toml as t
 
 class CfgFile:
