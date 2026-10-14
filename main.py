@@ -116,7 +116,10 @@ class MainFrame(wx.Frame):
 
     def onEditDefaults(self, _):
         """Display the Edit panel"""
-        pass
+        print("In onEditDefaults")
+
+    def onConfigSlideshow(self, _):
+        print("In onConfigSlideshow")
 
 if __name__ == '__main__':
     # When this module is run (not imported) then create the app, the

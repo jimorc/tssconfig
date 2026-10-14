@@ -33,18 +33,27 @@ class DefaultsStatusSizer(wx.BoxSizer):
                                     proportion=1,
                                     flag=wx.BOTTOM)
         button_sizer = self.create_button_bar_sizer()
-        button_sizer.Realize()
         pnl_sizer.Add(button_sizer, 1, flag=wx.RIGHT)
 
         self.Add(pnl_sizer, 1)
 
-    def create_button_bar_sizer(self) -> wx.StdDialogButtonSizer:
-        sizer = wx.StdDialogButtonSizer()
+    def create_button_bar_sizer(self) -> wx.BoxSizer:
+        sizer = wx.BoxSizer()
 
-        edit = wx.Button(self.parent, label="Edit Defaults",
-                         id=wx.ID_CANCEL)
+        edit = wx.Button(self.parent, label="Edit Defaults")
         edit.SetToolTip("Click to edit default values")
         edit.Bind(wx.EVT_BUTTON, self.parent.onEditDefaults)
 
-        sizer.Add(edit,flag=wx.ALL, border = 5)
+        quit = wx.Button(self.parent, label="Quit")
+        quit.SetToolTip("Click to terminate the program")
+        quit.Bind(wx.EVT_BUTTON, self.parent.OnExit)
+
+        config = wx.Button(self.parent, label="Configure Slideshow")
+        config.SetToolTip("Click to configure the slideshow")
+        config.Bind(wx.EVT_BUTTON, self.parent.onConfigSlideshow)
+
+        sizer.AddSpacer(200)
+        sizer.Add(edit, flag=wx.ALL, border=10)
+        sizer.Add(config, flag=wx.ALL, border=10)
+        sizer.Add(quit, flag=wx.ALL, border=10)
         return sizer
