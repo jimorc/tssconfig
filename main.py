@@ -114,6 +114,9 @@ class MainFrame(wx.Frame):
                       "About tssconfig",
                       wx.OK|wx.ICON_INFORMATION)
 
+    def onEditDefaults(self, _):
+        """Display the Edit panel"""
+        pass
 
 if __name__ == '__main__':
     # When this module is run (not imported) then create the app, the
