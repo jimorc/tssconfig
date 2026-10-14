@@ -1,3 +1,4 @@
 coverage==7.16.2
+numpy==2.5.4
 toml==0.10.2
-wxPython==4.3.1
+wxPython==4.3.2
