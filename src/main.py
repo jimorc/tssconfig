@@ -4,6 +4,8 @@ Configure a slideshow
 
 import wx
 
+from defaults_status_sizer import DefaultsStatusSizer
+
 class MainFrame(wx.Frame):
     """
     Main Frame for the tssconfig program
@@ -57,7 +59,10 @@ class MainFrame(wx.Frame):
 
     def onStartClicked(self, _):
         """This method handles clicks on the Start Configuration button."""
-        print("In onStartClicked")
+        self.GetChildren()[0].Destroy() # destroy original widgets
+        sizer = DefaultsStatusSizer(self)
+        self.SetSizer(sizer)
+        self.Layout()
 
     def makeQuitButton(self, parent) -> wx.Button:
         """This method creates a Quit button for display on the MainFrame"""
@@ -107,7 +112,7 @@ class MainFrame(wx.Frame):
         """Display an About Dialog"""
         wx.MessageBox("This is the trilliumslideshow configuration program",
                       "About tssconfig",
-                      wx.OK|wx.ICON_ERROR)
+                      wx.OK|wx.ICON_INFORMATION)
 
 
 if __name__ == '__main__':
@@ -115,7 +120,6 @@ if __name__ == '__main__':
     # frame, show it, and start the event loop.
     app = wx.App()
     frm = MainFrame(None, title='Slideshow Configurator')
-#    frm.SetSize(-1, -1, 300, 200)
-#    frm.Fit()
+    frm.SetSize(-1, -1, 600, 250)
     frm.Show()
     app.MainLoop()

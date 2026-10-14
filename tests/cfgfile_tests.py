@@ -138,6 +138,9 @@ class TestCFGFile(unittest.TestCase):
         except Exception as e:
             self.fail(
                 "Error encountered while attempting to decode invalid config")
+        finally:
+            if f.exists():
+                f.remove()
 
         self.assertIn("Config file does not contain valid text", status,
                       "Invalid TOML test failed")
